@@ -1,49 +1,42 @@
-import React from "react";
-import { Link, Outlet, ReactLocation, Router } from "@tanstack/react-location";
+import { Outlet, ReactLocation, Router } from "@tanstack/react-location";
+import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { red } from "@mui/material/colors";
 
-import "./App.css";
+import Routing from "./Configs/Routing";
+
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
 // Set up a ReactLocation instance
 const location = new ReactLocation();
 
-function Home() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Dashboard</h1>
-        <Link to="/posts">Post</Link>
-      </header>
-    </div>
-  );
-}
-
-function Posts() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Posts</h1>
-        <Link to="/" activeOptions={{ exact: true }}>
-          Home
-        </Link>
-      </header>
-    </div>
-  );
-}
+// A custom theme for this app
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#556cd6",
+    },
+    secondary: {
+      main: "#19857b",
+    },
+    error: {
+      main: red.A400,
+    },
+  },
+});
 
 function App() {
   return (
-    <Router
-      location={location}
-      routes={[
-        { path: "/", element: <Home /> },
-        {
-          path: "posts",
-          element: <Posts />,
-        },
-      ]}
-    >
-      <Outlet />
-    </Router>
+    <ThemeProvider theme={theme}>
+      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+      <CssBaseline />
+      <Router location={location} routes={Routing}>
+        <Outlet />
+      </Router>
+    </ThemeProvider>
   );
 }
 
